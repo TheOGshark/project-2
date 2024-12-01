@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đăng ký</title>
+<link rel="stylesheet" href="./styles-signup.css">
+</head>
+<body>
+<div class="container">
+    <h2>Đăng ký thông tin cá nhân</h2>
+    <form id="registrationForm" submit="validateForm(event);return false;">
+        <div class="form-group">
+            <label for="fullName">Họ và tên:</label>
+            <input type="text" id="username" name="username" placeholder="Nhập họ và tên" >
+        </div>
+        <div class="form-group">
+            <label for="age">Tuổi:</label>
+            <input type="number" id="age" name="age" placeholder="Nhập tuổi" >
+        </div>
+        <div class="form-group">
+            <label for="phone">Mật khẩu:</label>
+            <input type="password" id="password" name="password" placeholder="Nhập mật khẩu">
+        </div>
+        <div class="form-group">
+            <label for="phone">Xác nhận mật khẩu:</label>
+            <input type="password" id="verifyPassword" name="verifyPassword" placeholder="Xác nhận mật khẩu">
+        </div>
+        <div class="form-group">
+            <label for="phone">Số điện thoại:</label>
+            <input type="tel" id="phone" name="phone" placeholder="+84" >
+        </div>
+        <div class="form-group">
+            <label for="gender">Giới tính:</label>
+            <select id="gender" name="gender" >
+                <option value="">Chọn giới tính</option>
+                <option value="male">Nam</option>
+                <option value="female">Nữ</option>
+                <option value="other">Khác</option>
+            </select>
+        </div>
+        
+        <p style="color: gray;">Đã có tài khoản? <a href="dang-nhap.html" style="text-decoration: unset;color: blue">Đăng nhập</a></p>
+        <p style="color: gray;">Quay lại <a href="./trangchu.html" style="text-decoration: unset;color: blue">trang chủ</a></p>
+        <button type="submit" value="Lưu">Đăng ký</button>
+    </form>
+</div>
+<script src="./java/script.js"></script>
+</body>
+</html>
