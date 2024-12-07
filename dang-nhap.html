@@ -64,13 +64,49 @@
 </style>
 </head>
 <body>
-    <form id="loginForm" action="index.html" >
+    <form id="loginForm" action="trangchu.html" >
             <label for="username" style="margin-bottom: 3px; font-size: 45px;font-weight: 450;"> Đăng nhập</label><br>
-            <input type="text" id="username" required placeholder="Tên đăng nhập"><br>
-            <input type="password" id="password" required placeholder="Mật khẩu"><br>    
+            <input type="text" id="loginUsername"  placeholder="Tên đăng nhập"><br>
+            <input type="password" id="loginPassword"  placeholder="Mật khẩu"><br>    
             <button type="submit">Đăng nhập</button><br>
         <p style="color: gray;">Chưa có tài khoản? <a href="sign up.html" style="text-decoration: unset;color: blue">Đăng ký ngay</a></p>
         <p style="color: gray;">Quay về <a href="./trangchu.html" style="text-decoration: unset;color: blue">trang chủ</a></p>
     </form>
+    <script>
+       document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    let usernameLogin = document.getElementById('loginUsername').value.trim();
+    let passwordLogin = document.getElementById('loginPassword').value.trim();
+    
+    let errorMessage = '';
+
+    if (usernameLogin === "") {
+        errorMessage += "Tên đăng nhập không được để trống.\n";
+    }
+
+    if (passwordLogin === "") {
+        errorMessage += "Mật khẩu không được để trống.\n";
+    }
+
+    if (passwordLogin !== "" && passwordLogin.length < 6) {
+        errorMessage += "Mật khẩu phải có ít nhất 6 ký tự.\n";
+    }
+
+    if (errorMessage !== '') {
+        alert(errorMessage);
+        return;
+    }
+
+    let passwordStore = localStorage.getItem(usernameLogin);
+
+    if (passwordLogin === passwordStore) {
+        alert('Đăng nhập thành công!');
+        window.location.href = 'trangchu.html';
+    } else {
+        alert('Sai tên đăng nhập hoặc mật khẩu!');
+    }
+});
+    </script>
 </body>
 </html>

@@ -33,35 +33,35 @@ function scrollToTop() {
     {
       imgUrl:"https://images.unsplash.com/photo-1548741487-18d363dc4469?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       name: "Chocolate tươi 1 hộp 408 gram",
-      price:"476.000",
+      price:"476000",
     },{
       imgUrl:"https://images.unsplash.com/photo-1583312228158-4001fca6e316?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       name: "Chocolate Belgium",
-      price:"320.000",
+      price:"320000",
     },{
       imgUrl:"https://images.unsplash.com/photo-1623000850229-ad83232ea6c7?q=80&w=1412&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       name: "Chocolate đen 100%",
-      price:"100.000",
+      price:"100000",
     },{
       imgUrl:"https://images.unsplash.com/photo-1582042837973-a13faf7e0eb4?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       name: "Chocolate Lindt",
-      price:"200.000",
+      price:"200000",
     },{
       imgUrl:"https://images.unsplash.com/photo-1674069686288-071c6e4ef838?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       name: "Kẹo dẻo cầu vồng",
-      price:"70.000",
+      price:"70000",
     },{
       imgUrl:"https://images.unsplash.com/photo-1719825440643-5662470e5964?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       name: "Kẹo dẻo, bánh khoai môn, bánh quy các loại",
-      price:"150.000",
+      price:"150000",
     },{
       imgUrl:"https://images.unsplash.com/photo-1729478673847-1c1da37f86f6?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       name: "Bánh quy ngọt các loại",
-      price:"120.000",
+      price:"120000",
     },{
       imgUrl:"https://plus.unsplash.com/premium_photo-1677607979859-126a98970ad4?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       name: "Raspberry Lemon Cake",
-      price:"350.000",
+      price:"350000",
     }
     
   ];
@@ -78,11 +78,83 @@ function scrollToTop() {
                 </div></a>
                 <h3 class="image-title">${product.name}</h3>
                 <p>${product.price} VNĐ</p>
-                <button class="btn btn--left">ADD TO CART</button>
+                <button class="btn btn--left" onclick="addToCart('${product.name}', ${product.price})">ADD TO CART</button>
               </div>
           `;
       productList.appendChild(divElement);
     });
   }
+
+  let cart = [];
+  let total = 0;
+  function toggleCart() {
+    const cartElement = document.getElementById("cart");
+    cartElement.style.display =
+      cartElement.style.display === "block" ? "none" : "block";
+  }
+  function addToCart(productName, productPrice) {
+    const existingProduct = cart.find((item) => item.name === productName);
   
+    if (existingProduct) {
+      existingProduct.quantity++;
+    } else {
+      cart.push({ name: productName, price: productPrice, quantity: 1 });
+    }
+  
+    updateCart();
+  }
+  
+  // Cập nhật giỏ hàng
+  function updateCart() {
+    const cartItemsElement = document.getElementById("cart-items");
+    cartItemsElement.innerHTML = "";
+    total = 0;
+  
+    cart.forEach((item) => {
+      const li = document.createElement("li");
+      li.innerHTML = `${item.name} - ${item.price} VNĐ x ${item.quantity} 
+              <button onclick="changeQuantity('${item.name}', 1)">+</button>
+              <button onclick="changeQuantity('${item.name}', -1)">-</button>`;
+      cartItemsElement.appendChild(li);
+  
+      total += item.price * item.quantity;
+    });
+  
+    document.getElementById("cart-count").innerText = cart.reduce(
+      (sum, item) => sum + item.quantity,
+      0
+    );
+    document.getElementById("total-price").innerText = total + " VNĐ";
+  }
+  
+  // Thay đổi số lượng sản phẩm trong giỏ hàng
+  function changeQuantity(productName, delta) {
+    const product = cart.find((item) => item.name === productName);
+  
+    if (product) {
+      product.quantity += delta;
+  
+      if (product.quantity <= 0) {
+        cart = cart.filter((item) => item.name !== productName);
+      }
+  
+      updateCart();
+    }
+  }
+  
+  // Thêm sự kiện click cho toàn bộ tài liệu
+  document.addEventListener("click", function (event) {
+    const cartElement = document.getElementById("cart");
+    const cartIcon = document.querySelector("#cart-logo");
+
+    // Kiểm tra nếu cartElement và cartIcon tồn tại
+    if (!cartElement.contains(event.target) && !cartIcon.contains(event.target)) {
+    cartElement.style.display = "none";
+
+    
+  }
+});
+  
+  // Gọi hàm renderProducts khi tài liệu đã sẵn sàng
   renderProduct();
+  
