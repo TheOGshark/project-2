@@ -1,0 +1,37 @@
+body {
+    background-color:  #155831;
+}
+.slick-initialized .slick-slide {
+    display: flex;
+    padding-top: 100px;
+    padding-left: 50px;
+}
+.product-image {
+height: 300px;
+}
+.product-image img {
+    width: 450px;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+}
+.product-info {
+    font-size: 20px;
+    padding-left: 20px;
+    width: 500px;
+}
+.product-title {
+    font-size: 20px;
+    color: white;
+    margin: 0;
+    
+}
+.product-description {
+    color:#f0ac28;
+}
+.product-price {
+    color: red;
+}
+.slick-dots{
+    bottom:100px;
+}
